@@ -1,0 +1,94 @@
+---
+interface Props {
+  title?: string;
+}
+const { title = '快工具箱' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#1e40af" />
+  <meta name="description" content="快工具箱 - 20+款实用工具合集，图片处理、文字处理、文档转换、AI工具一站式移动端工具箱" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
+  <title>{title}</title>
+  <style>
+    /* Safe area support */
+    .safe-top { padding-top: env(safe-area-inset-top); }
+    .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+    /* Hide scrollbar */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    /* Card press effect */
+    .card-press { transition: transform 0.15s, box-shadow 0.15s; }
+    .card-press:active { transform: scale(0.97); }
+    /* Search expand */
+    .search-box:focus-within { box-shadow: 0 0 0 3px rgba(59,130,246,0.3); }
+    /* Category tab indicator */
+    .cat-tab { transition: all 0.2s; }
+    .cat-tab.active { background: #2563eb; color: white; }
+    /* Tool card */
+    .tool-card { transition: transform 0.15s ease, box-shadow 0.15s ease; }
+    .tool-card:active { transform: scale(0.96); }
+    /* Tab bar */
+    .tab-item { transition: color 0.2s; }
+    .tab-item.active { color: #2563eb; }
+    .tab-item.active .tab-dot { opacity: 1; }
+    /* Gradient bg */
+    .gradient-header {
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #6366f1 100%);
+    }
+    /* Splash */
+    .splash {
+      position: fixed; inset: 0; z-index: 9999;
+      background: linear-gradient(135deg, #1e40af 0%, #6366f1 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 0.4s ease;
+    }
+    .splash.hide { opacity: 0; pointer-events: none; }
+    /* Pull refresh */
+    .pull-indicator {
+      transition: transform 0.3s;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.8rem;
+      overflow: hidden;
+      max-height: 0;
+    }
+    .pull-indicator.show { max-height: 50px; padding: 8px 0; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen font-sans antialiased">
+  <!-- Splash Screen -->
+  <div id="splash" class="splash">
+    <div class="text-6xl mb-4">🧰</div>
+    <h1 class="text-white text-2xl font-bold">快工具箱</h1>
+    <p class="text-blue-200 text-sm mt-2">加载中...</p>
+  </div>
+
+  <slot />
+
+  <script>
+    // Hide splash after load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const splash = document.getElementById('splash');
+        if (splash) {
+          splash.classList.add('hide');
+          setTimeout(() => splash.remove(), 400);
+        }
+      }, 300);
+    });
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>
