@@ -1,4 +1,4 @@
-const config = {
+export default {
   appId: 'cn.zhinenti.toolbox',
   appName: '万能工具箱',
   webDir: 'dist',
@@ -18,5 +18,3 @@ const config = {
     }
   }
 };
-
-exports.default = config;
