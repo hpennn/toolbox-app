@@ -1,10 +1,8 @@
-export default {
+const config = {
   appId: 'cn.zhinenti.toolbox',
   appName: '万能工具箱',
   webDir: 'dist',
-  server: {
-    androidScheme: 'https'
-  },
+  server: { androidScheme: 'https' },
   android: {
     allowMixedContent: false,
     captureInput: true,
@@ -18,3 +16,4 @@ export default {
     }
   }
 };
+module.exports = config;
