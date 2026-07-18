@@ -1,6 +1,4 @@
-import type { CapacitorConfig } from '@capacitor/cli';
-
-const config: CapacitorConfig = {
+const config = {
   appId: 'cn.zhinenti.toolbox',
   appName: '万能工具箱',
   webDir: 'dist',
@@ -21,4 +19,4 @@ const config: CapacitorConfig = {
   }
 };
 
-export default config;
+exports.default = config;
